@@ -1,0 +1,33 @@
+# Rathole unified configuration
+# Run as server: rathole --server rathole.toml
+# Run as client: rathole --client rathole.toml
+# See https://github.com/rathole-org/rathole for more details
+
+[server]
+bind_addr = "0.0.0.0:2333"             # Use the port that you are going to expose for the control channel
+default_token = "*******"              # Chose a high entropy secret token. 128+ bytes would do nicely
+
+[server.transport]
+type = "noise"                         # This is setting up noise encryption
+[server.transport.noise]
+local_private_key = "***"              # Generate a nice private key and base64 encode it. 
+
+# Ports you are exposing
+[client.services.udp-27015]
+local_addr = "192.168.3.12:27015"
+type = "udp"
+[client.services.udp-17777]
+local_addr = "192.168.3.12:17777"
+type = "udp"
+
+
+[client]
+remote_addr = "SERVER_PUBLIC_IP:2333"  # Your server public IP and the port it is bound to listen
+default_token = "*******"              # Same as the server default_token
+
+[client.services.udp-27015]
+local_addr = "GAME_SERVER_PRIVATE_IP:27015"
+type = "udp"
+[client.services.udp-17777]
+local_addr = "GAME_SERVER_PRIVATE_IP:17777"
+type = "udp"

@@ -1,0 +1,17 @@
+---
+services:
+  icarus:
+    image: icarus-server
+    platform: linux/amd64
+    restart: unless-stopped
+    container_name: icarus
+    stop_grace_period: 30s
+# network_mode as host is required for LAN discovery to work properly. For remote connections only you can use port mapping.
+    network_mode: host
+#    ports:
+#      - 17777:17777/udp
+#      - 27015:27015/udp
+    env_file:
+      - .env
+    volumes:
+      - ./game-files:/home/steam/game-files
